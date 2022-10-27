@@ -1,7 +1,7 @@
 package src.lecture9.act2;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,9 +20,9 @@ public class Act2 {
                 lines.add("\n");
             }
             sc.close();
-            FileWriter fw = new FileWriter(fr);
+            PrintWriter fw = new PrintWriter(fr);
             for(String line : lines){
-                fw.write(line);
+                fw.print(line);
             }
             fw.close();
         }catch (Exception e){
