@@ -1,0 +1,4 @@
+Inthefollowingexample,weusetheFileWriterclasstogether
+withitswrite()methodtowritesometexttothefilewecreated
+intheexampleabove.Notethatwhenyouaredonewritingtothe
+file,youshouldcloseitwiththeclose()method:
