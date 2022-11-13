@@ -22,7 +22,7 @@ public class Cart {
 
     public boolean removeProduct(int id) {
         for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).id == id) {
+            if (cart.get(i).getId() == id) {
                 cart.remove(i);
                 return true;
             }
@@ -32,7 +32,7 @@ public class Cart {
 
     public boolean updateProduct(int id, String name, double price, int quantity) {
         for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).id == id) {
+            if (cart.get(i).getId() == id) {
                 cart.get(i).setName(name);
                 cart.get(i).setPrice(price);
                 cart.get(i).setQuantity(quantity);
@@ -44,9 +44,9 @@ public class Cart {
 
     public void displayCart() { //Display a table-like list of all products to the console
         System.out.println("\n---------------------------------------------------------------------------\n");
-        System.out.printf("|%-8s\t|%-20s\t|%-10s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
+        System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
         for (int i = 0; i < cart.size(); i++) {
-            System.out.printf("|%-8d\t|%-20s\t|%-8.2f\t|%-8d\n", cart.get(i).id, cart.get(i).name, cart.get(i).price, cart.get(i).quantity);
+            System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
         }
         System.out.println("\n---------------------------------------------------------------------------\n");
 
@@ -59,11 +59,11 @@ public class Cart {
             if (cart.get(i).name.contains(key)) {
                 if(firstTime == 1){
                     System.out.println("\n---------------------------------------------------------------------------\n");
-                    System.out.printf("|%-8s\t|%-20s\t|%-10s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
+                    System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
                     firstTime = 0;
                 }
                 
-                System.out.printf("|%-8d\t|%-20s\t|%-8.2f\t|%-8d\n", cart.get(i).id, cart.get(i).name, cart.get(i).price, cart.get(i).quantity);
+                System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
                 found = 1;
             }
         }
@@ -81,7 +81,7 @@ public class Cart {
                 File f = new File(fileName);
                 FileWriter fw = new FileWriter(f);
                 for(int i = 0; i < cart.size(); i++){
-                    fw.write(cart.get(i).name + " ; " + cart.get(i).price + " ; " + cart.get(i).quantity + "\n");
+                    fw.write(cart.get(i).getName() + ";" + cart.get(i).getPrice() + ";" + cart.get(i).getQuantity() + "\n");
                 }
                 fw.close();
                 return true;
@@ -97,7 +97,7 @@ public class Cart {
                 ObjectOutputStream ois = new ObjectOutputStream(fis);
                 ArrayList<String> temp = new ArrayList<String>();
                 for(int i = 0; i < cart.size(); i++){
-                    temp.add(cart.get(i).name + " ; " + cart.get(i).price + " ; " + cart.get(i).quantity);
+                    temp.add(cart.get(i).getName() + ";" + cart.get(i).getPrice() + ";" + cart.get(i).getQuantity());
                 }
                 ois.writeObject(temp);
                 ois.close();
@@ -118,7 +118,7 @@ public class Cart {
                 Scanner sc = new Scanner(f);
                 while(sc.hasNextLine()){
                     String str =  sc.nextLine();
-                    String[] line = str.split(" ; ", 5);
+                    String[] line = str.split(";", 5);
                     
                     cart.add(new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2])));
                 }
@@ -141,7 +141,7 @@ public class Cart {
                 // }
                 ArrayList<String> temp = (ArrayList<String>) ois.readObject();
                 for(int i = 0; i < temp.size(); i++){
-                    String[] line = temp.get(i).split(" ; ");
+                    String[] line = temp.get(i).split(";");
                     cart.add(new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2])));
                 }
                 // temp = (ArrayList<Product>) ois.readObject();

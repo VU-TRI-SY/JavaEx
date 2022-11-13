@@ -1,3 +1,5 @@
-Asus VivoBook ; 999.9 ; 3
-Dell Latitude ; 1299.9 ; 2
-Macbook Pro ; 2999.9 ; 2
+Dell Latitude;1299.9;2
+Asus VivoBook;999.9;3
+Macbook Pro;2999.9;2
+Macbook Air;1999.9;1
+Macbook M1;1499.9;1
