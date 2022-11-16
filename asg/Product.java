@@ -1,15 +1,18 @@
 package asg;
 public class Product{
+    //public private: access modifier
     private static int count = 0; // count to generate product id
     int id;
     String name;
     double price;
     int quantity;
-    public Product(String name, double price, int quantity) {
+
+    public Product(String name_, double price_, int quantity_) {
+        //this: refer to the current object -> object that call this method
         this.id = count++;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
+        this.name = name_;
+        this.price = price_;
+        this.quantity = quantity_;
     }
 
     public int getId() {
@@ -27,7 +30,8 @@ public class Product{
     public int getQuantity() {
         return quantity;
     }
-
+    //get: lay thong tin
+    //set: gan thong tin
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -41,3 +45,4 @@ public class Product{
     }
     
 }
+

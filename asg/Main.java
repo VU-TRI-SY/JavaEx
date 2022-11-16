@@ -121,7 +121,7 @@ public class Main {
                     fileType = sc.nextInt();
                     sc.nextLine(); //clear buffer
                 }while(fileType != 0 && fileType != 1);
-                System.out.print(ANSI_PURPLE + "\nEnter the file path: " + ANSI_ORANGE);
+                System.out.print(ANSI_PURPLE + "Enter the file path: " + ANSI_ORANGE);
                 filePath = sc.nextLine();
                 if(cart.loadCart(filePath, fileType == 1)){
                     System.out.println(ANSI_GREEN + "\nProducts have been loaded from " + filePath + ANSI_RESET);

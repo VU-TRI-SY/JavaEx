@@ -16,11 +16,20 @@ public class Cart {
         cart = new ArrayList<Product>();
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(Product product) { //feature 1: add product
         cart.add(product);
     }
 
-    public boolean removeProduct(int id) {
+    public void displayCart() { //feature 2: display product
+        System.out.println("\n---------------------------------------------------------------------------\n");
+        System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
+        for (int i = 0; i < cart.size(); i++) {
+            System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
+        }
+        System.out.println("\n---------------------------------------------------------------------------\n");
+    }
+
+    public boolean removeProduct(int id) { //feature 3: remove product
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getId() == id) {
                 cart.remove(i);
@@ -30,7 +39,7 @@ public class Cart {
         return false;
     }
 
-    public boolean updateProduct(int id, String name, double price, int quantity) {
+    public boolean updateProduct(int id, String name, double price, int quantity) { //feature 4: update product
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getId() == id) {
                 cart.get(i).setName(name);
@@ -42,27 +51,18 @@ public class Cart {
         return false;
     }
 
-    public void displayCart() { //Display a table-like list of all products to the console
-        System.out.println("\n---------------------------------------------------------------------------\n");
-        System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
-        for (int i = 0; i < cart.size(); i++) {
-            System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
-        }
-        System.out.println("\n---------------------------------------------------------------------------\n");
 
-    }
 
-    public boolean searchProduct(String key) {
+    public boolean searchProduct(String key) { //feature 5: search product by key
         int found = 0; 
         int firstTime = 1;
         for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).name.contains(key)) {
+            if (cart.get(i).getName().contains(key)) {
                 if(firstTime == 1){
                     System.out.println("\n---------------------------------------------------------------------------\n");
                     System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
                     firstTime = 0;
                 }
-                
                 System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
                 found = 1;
             }
@@ -74,17 +74,31 @@ public class Cart {
         return false;
     }
 
-    public boolean saveCart(String fileName, boolean text) {
+    public void sortCart(){ //feature 6: sort cart
+        //sort cart by price
+        //bubble sort
+        for(int i = 0; i < cart.size(); i++){
+            for(int j = i + 1; j < cart.size(); j++){
+                if(cart.get(i).price > cart.get(j).price){
+                    Product temp = cart.get(i);
+                    cart.set(i, cart.get(j));
+                    cart.set(j, temp);
+                }
+            }
+        }
+    }
+
+    public boolean saveCart(String fileName, boolean text) { //feature 7: save products to file
         if (text) {
             //save as text file
             try{
                 File f = new File(fileName);
-                FileWriter fw = new FileWriter(f);
+                FileWriter fw = new FileWriter(f); //ghi vao file f
                 for(int i = 0; i < cart.size(); i++){
                     fw.write(cart.get(i).getName() + ";" + cart.get(i).getPrice() + ";" + cart.get(i).getQuantity() + "\n");
                 }
                 fw.close();
-                return true;
+                return true; //save successfully
             }catch(Exception e){
                 System.out.println(e);
                 return false;
@@ -110,7 +124,7 @@ public class Cart {
         }
     }
 
-    public boolean loadCart(String fileName, boolean text) {
+    public boolean loadCart(String fileName, boolean text) { //feature 8: load products from file -> save to cart
         if (text) {
             //load from text file
             try{
@@ -118,9 +132,11 @@ public class Cart {
                 Scanner sc = new Scanner(f);
                 while(sc.hasNextLine()){
                     String str =  sc.nextLine();
-                    String[] line = str.split(";", 5);
-                    
-                    cart.add(new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2])));
+                    //str = "Dell Latitude;1299.9;2"
+                    String[] line = str.split(";", 5); 
+                    //line = {"Dell Latitude", "1299.9", "2"}
+                    Product p = new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2]));
+                    cart.add(p);
                 }
                 sc.close();
                 return true;
@@ -134,20 +150,11 @@ public class Cart {
             try{
                 FileInputStream is = new FileInputStream(fileName);
                 ObjectInputStream ois = new ObjectInputStream(is);
-                // while(ois.read() != -1){
-                //     System.out.println("here");
-                //     String[] line = ois.readUTF().split(" ; ");
-                //     cart.add(new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2])));
-                // }
-                ArrayList<String> temp = (ArrayList<String>) ois.readObject();
+                ArrayList<String> temp = (ArrayList<String>) ois.readObject(); //read object(ararylist) from file -> temp
                 for(int i = 0; i < temp.size(); i++){
                     String[] line = temp.get(i).split(";");
                     cart.add(new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2])));
                 }
-                // temp = (ArrayList<Product>) ois.readObject();
-                // for(int i = 0; i < temp.size(); i++){
-                //     cart.add(temp.get(i));
-                // }
                 ois.close();
                 return true;
             }catch(Exception e){
@@ -157,17 +164,6 @@ public class Cart {
         }
     }
 
-    public void sortCart(){
-        //sort cart by price
-        for(int i = 0; i < cart.size(); i++){
-            for(int j = i + 1; j < cart.size(); j++){
-                if(cart.get(i).price > cart.get(j).price){
-                    Product temp = cart.get(i);
-                    cart.set(i, cart.get(j));
-                    cart.set(j, temp);
-                }
-            }
-        }
-    }
+
 
 }
