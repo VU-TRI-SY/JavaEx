@@ -138,7 +138,7 @@ public class Main {
                         System.exit(0);
                         break;
                     }else{
-                        System.out.println();
+                        System.out.println(); 
                         break;
                     }
                 default:

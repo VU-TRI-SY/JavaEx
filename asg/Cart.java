@@ -22,13 +22,16 @@ public class Cart {
 
     public void displayCart() { //feature 2: display product
         System.out.println("\n---------------------------------------------------------------------------\n");
-        System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s\n", "ID", "Name", "Price", "Quantity");
+        System.out.printf("|%-8s\t|%-20s\t|%-14s\t|%-8s", "ID", "Name", "Price", "Quantity");
+        System.out.println(); // ~ \n
         for (int i = 0; i < cart.size(); i++) {
-            System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d\n", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
+            System.out.printf("|%-8d\t|%-20s\t|%-12.2f\t|%-8d", cart.get(i).getId(), cart.get(i).getName(), cart.get(i).getPrice(), cart.get(i).getQuantity());
+            System.out.println(); // ~ \n
         }
         System.out.println("\n---------------------------------------------------------------------------\n");
     }
-
+    // \n: new line
+    // \0: null character: ending character of a string
     public boolean removeProduct(int id) { //feature 3: remove product
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getId() == id) {
@@ -133,7 +136,7 @@ public class Cart {
                 while(sc.hasNextLine()){
                     String str =  sc.nextLine();
                     //str = "Dell Latitude;1299.9;2"
-                    String[] line = str.split(";", 5); 
+                    String[] line = str.split(";");
                     //line = {"Dell Latitude", "1299.9", "2"}
                     Product p = new Product(line[0], Double.parseDouble(line[1]), Integer.parseInt(line[2]));
                     cart.add(p);

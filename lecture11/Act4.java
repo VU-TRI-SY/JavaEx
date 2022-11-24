@@ -18,6 +18,7 @@ public class Act4 {
 			System.out.println("3.Exit");
 			System.out.print("Enter your choice: ");
 			choice = Integer.parseInt(sc.nextLine());
+			// choice = sc.nextInt();
 			switch(choice){
 				case 1: 
 					System.out.print("Enter class' name: ");
