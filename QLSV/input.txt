@@ -1,0 +1,6 @@
+Ha Nguyen;21;2.1
+Duy Thanh;20;2.8
+Duc Duy;20;2.9
+Ha My;18;3.2
+Ngoc Mai;19;2.5
+Duc Dung;24;1.8
